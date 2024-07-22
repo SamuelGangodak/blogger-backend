@@ -112,7 +112,7 @@ app.get("/", (req, res) => {
   res.json({ "port" : port, "message": "Hello World!" });
 });
 
-app.get("/blog/:cat", async (req, res) => {
+app.get("https://blogger-backend-4aky.onrender.com/blog/:cat", async (req, res) => {
   try {
     const category = req.params.cat !== 'all' ? req.params.cat : '%';
     const result = await pool.query(
@@ -125,7 +125,7 @@ app.get("/blog/:cat", async (req, res) => {
   }
 });
 
-app.get("/blog/id/:id", async (req, res) => {
+app.get("https://blogger-backend-4aky.onrender.com/blog/id/:id", async (req, res) => {
     console.log("hello");
   try {
     const id = parseInt(req.params.id, 10);
@@ -144,7 +144,7 @@ app.get("/blog/id/:id", async (req, res) => {
   }
 });
 
-app.post("/blog", async (req, res) => {
+app.post("https://blogger-backend-4aky.onrender.com/blog", async (req, res) => {
   try {
     const result = await pool.query(
       'INSERT INTO blogs (title, image, post, category) VALUES($1, $2, $3, $4)',
@@ -157,7 +157,7 @@ app.post("/blog", async (req, res) => {
   }
 });
 
-app.post('/blogimage', upload.single('file'), (req, res) => {
+app.post('https://blogger-backend-4aky.onrender.com/blogimage', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
