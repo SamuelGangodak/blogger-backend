@@ -109,7 +109,7 @@ app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
 app.get("/", (req, res) => {
-  res.json({ "message": "Hello World!" });
+  res.json({ "port" : port, "message": "Hello World!" });
 });
 
 app.get("/blog/:cat", async (req, res) => {
@@ -128,6 +128,7 @@ app.get("/blog/:cat", async (req, res) => {
 app.get("/blog/id/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
+    console.log(id);
     if (isNaN(id)) {
       return res.status(400).json({ error: 'Invalid ID' });
     }
@@ -137,8 +138,8 @@ app.get("/blog/id/:id", async (req, res) => {
     );
     res.json({ "data": result.rows });
   } catch (err) {
-    console.log(req);
-    res.status(500).json({ error: err.message });
+    console.log(err);
+    res.status(500).json({ "port" : port,  error: err.message });
   }
 });
 
@@ -150,7 +151,8 @@ app.post("/blog", async (req, res) => {
     );
     res.json({ "message": "Added a new blog", "desc": result.rowCount });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.log(err);
+    res.status(500).json({ "port" : port,  error: err.message });
   }
 });
 
