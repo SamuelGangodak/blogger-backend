@@ -3,6 +3,10 @@ import multer from "multer";
 // import db from "./db/connection.js"
 import cors from "cors"
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import pkg from 'pg';
 const { Pool } = pkg;
 
