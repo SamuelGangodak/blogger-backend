@@ -1,7 +1,18 @@
 import express from "express"
 import multer from "multer";
-import db from "./db/connection.js"
+// import db from "./db/connection.js"
 import cors from "cors"
+
+import pkg from 'pg';
+const { Pool } = pkg;
+
+const pool = new Pool({
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
+});
 
 const app=express();
 
@@ -29,7 +40,7 @@ app.get("/", (req, res)=>{
 
 app.get("/blog/:cat", async (req, res)=>{
     res.set('Access-Control-Allow-Origin', '*');
-    const result=await db.query(
+    const result=await pool.query(
         req.params.cat!='all' ? `SELECT * FROM blogs where category = '${req.params.cat}' ORDER by id DESC` : 'SELECT * FROM blogs ORDER by id DESC'
     );
     res.json({"data": result.rows});
@@ -37,13 +48,13 @@ app.get("/blog/:cat", async (req, res)=>{
 
 app.get("/blog/id/:id", async (req, res)=>{
     res.set('Access-Control-Allow-Origin', '*');
-    const result=await db.query(`SELECT * FROM blogs WHERE id = ${req.params.id} ORDER by id DESC`);
+    const result=await pool.query(`SELECT * FROM blogs WHERE id = ${req.params.id} ORDER by id DESC`);
     res.json({"data": result.rows});
 })
 
 app.post("/blog", async (req, res)=>{
     res.set('Access-Control-Allow-Origin', '*');
-    const result=await db.query('INSERT INTO blogs (title, image, post, category) VALUES($1, $2, $3, $4)', [req.body.title, req.body.image, req.body.post, req.body.category]);
+    const result=await pool.query('INSERT INTO blogs (title, image, post, category) VALUES($1, $2, $3, $4)', [req.body.title, req.body.image, req.body.post, req.body.category]);
     res.json({"message": "Added a new blog", "desc": result.rowCount});
 })
 
