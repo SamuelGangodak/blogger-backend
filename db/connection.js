@@ -29,8 +29,10 @@ const pool = new Pool({
   port: process.env.PG_PORT,
 });
 
-const db=await pool.connect();
-export default db;
+// const db=await pool.connect();
+// export default db;
 // export default {
 //   query: (text, params) => pool.query(text, params),
 // };
+
+export default pool;
