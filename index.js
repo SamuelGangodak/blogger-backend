@@ -137,6 +137,7 @@ app.get("/blog/id/:id", async (req, res) => {
     );
     res.json({ "data": result.rows });
   } catch (err) {
+    console.log(req);
     res.status(500).json({ error: err.message });
   }
 });
