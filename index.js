@@ -126,6 +126,7 @@ app.get("/blog/:cat", async (req, res) => {
 });
 
 app.get("/blog/id/:id", async (req, res) => {
+    console.log("hello");
   try {
     const id = parseInt(req.params.id, 10);
     console.log(id);
